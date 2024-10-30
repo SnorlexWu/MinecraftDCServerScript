@@ -25,7 +25,7 @@ while True:
         break
     if output:
         print(output.strip())
-        if "Done" in output or "server is running" in output:
+        if "[Server thread/INFO]: Done" in output:
             server_running = True
             # Send Discord notification
             url = discord_channel
