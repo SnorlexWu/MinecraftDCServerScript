@@ -9,7 +9,7 @@ os.chdir(os.path.dirname(jar_path))
 
 # Start the server
 process = subprocess.Popen(
-    [java_path, '-jar', 'current.jar'],
+    [java_path, '-jar', 'current.jar','-nogui'],
     stdout=subprocess.PIPE,
     stderr=subprocess.PIPE,
     text=True
@@ -50,6 +50,11 @@ while True:
         player_name = output.split(" left the game")[0].split(": ")[-1]  # Extract player name
         leave_message = f"Notification:     {player_name} has left the server."
         res = requests.post(url, json={"content": leave_message}, headers=headers)
+        print("Leave notification sent:", res.status_code, res.content)
+
+    if "[Server thread/WARN]: Can't keep up! Is the server overloaded?" in output:
+        down_message = f"Server Status:     Server Ngo Lon having connection error, please whatsapp admin."
+        res = requests.post(url, json={"content": down_message}, headers=headers)
         print("Leave notification sent:", res.status_code, res.content)
 
 # Wait for the Java process to exit
